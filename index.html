@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive demo: capture a supplier receipt, review the details and export a verified CSV record.">
+  <title>AEFLIK Keeping — Receipt Processor Demo</title>
+  <link rel="stylesheet" href="styles.css"> 
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">A</div>
+        <div>
+          <strong>AEFLIK <span>Keeping</span></strong>
+          <small>Purchases · Receipt capture</small>
+        </div>
+      </div>
+      <div class="demo">INTERACTIVE DEMO</div>
+    </header>
+
+    <h1 class="heading">Turn receipts into clean records.</h1>
+    <p class="sub">Capture a supplier purchase, check the details, and export a verified record for your books.</p>
+
+    <ol class="steps" aria-label="Progress">
+      <li class="active">1&nbsp; Capture</li>
+      <li class="active" aria-current="step">2&nbsp; Review</li>
+      <li>3&nbsp; Export</li>
+    </ol>
+
+    <div class="layout">
+      <!-- Receipt source -->
+      <aside class="panel" aria-labelledby="source-title">
+        <h2 id="source-title">Receipt source</h2>
+        <p class="muted">Upload a receipt or start with a sample purchase.</p>
+
+        <div class="drop">
+          <div class="fileicon" aria-hidden="true">⇧</div>
+          <b>Choose a receipt file</b>
+          <p class="muted">PDF, JPG or PNG · demo only</p>
+          <input id="file" type="file" accept=".pdf,image/*" hidden>
+          <button type="button" class="btn secondary" id="browse">Browse files</button>
+        </div>
+
+        <button type="button" class="btn primary full sample" id="sample">Load sample receipt</button>
+
+        <div class="filelabel">
+          <span aria-hidden="true">▤</span>
+          <div>
+            <b id="filename">Supplier receipt</b>
+            <small id="filesub">No file selected</small>
+          </div>
+        </div>
+
+        <p class="status" role="status">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="state">Sample data ready to review</span>
+        </p>
+
+        <div class="note">
+          <b>Demo note</b><br>
+          Receipt extraction is simulated with sample data. No document is sent to an AI service.
+        </div>
+      </aside>
+
+      <!-- Purchase review -->
+      <section class="panel" aria-labelledby="review-title">
+        <div class="toolbar">
+          <div>
+            <h2 id="review-title">Purchase review</h2>
+            <p class="muted">Check the extracted details before exporting.</p>
+          </div>
+          <span class="badge">Review needed</span>
+        </div>
+
+        <div class="fields">
+          <div class="field">
+            <label for="supplier">Supplier</label>
+            <input id="supplier" value="Kgalagadi Wholesale">
+          </div>
+          <div class="field">
+            <label for="receipt">Receipt / invoice no.</label>
+            <input id="receipt" value="KW-10482">
+          </div>
+          <div class="field">
+            <label for="date">Purchase date</label>
+            <input id="date" type="date" value="2026-11-20">
+          </div>
+          <div class="field">
+            <label for="currency">Currency</label>
+            <input id="currency" value="BWP">
+          </div>
+        </div>
+
+        <div class="tablewrap">
+          <table>
+            <caption>Receipt line items</caption>
+            <thead>
+              <tr>
+                <th scope="col">Product / description</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Unit price</th>
+                <th scope="col">VAT %</th>
+                <th scope="col">Line total</th>
+                <th scope="col"><span class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Remove</span></th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+
+        <button type="button" class="btn secondary" id="add">+ Add item</button>
+
+        <div class="summary">
+          <div class="sum">
+            <div class="sumrow"><span>Subtotal</span><b id="subtotal">P 0.00</b></div>
+            <div class="sumrow"><span>VAT</span><b id="vat">P 0.00</b></div>
+            <div class="sumrow total"><span>Total</span><span id="total">P 0.00</span></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <span class="muted" id="count">3 line items</span>
+          <div class="right">
+            <button type="button" class="btn secondary" id="reset">Reset</button>
+            <button type="button" class="btn primary" id="export">Export verified CSV ↓</button>
+          </div>
+        </div>
+
+        <p class="reviewhint">⚑ Confirm product names, quantities and prices against the original receipt before using these records.</p>
+        <div class="toast" id="toast" role="status" hidden></div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      AEFLIK Solutions · Prototype for discussion · No real accounting or AI processing
+    </footer>
+  </main>
+
+
+</body>
+</html>
